@@ -8,6 +8,26 @@ window.addEventListener('resize', syncBannerHeight);
 window.addEventListener('load', syncBannerHeight);
 syncBannerHeight();
 
+// ---- match hero photo height to the text column (top: eyebrow, bottom: disclaimer) ----
+function syncHeroPhotoHeight() {
+  const top = document.querySelector('.eyebrow');
+  const bottom = document.querySelector('.hero__disclaimer');
+  const media = document.querySelector('.hero__media');
+  if (!top || !bottom || !media) return;
+  if (window.innerWidth <= 980) {
+    media.style.height = '';
+    return;
+  }
+  const height = bottom.getBoundingClientRect().bottom - top.getBoundingClientRect().top;
+  media.style.height = height + 'px';
+}
+window.addEventListener('resize', syncHeroPhotoHeight);
+window.addEventListener('load', syncHeroPhotoHeight);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(syncHeroPhotoHeight);
+}
+syncHeroPhotoHeight();
+
 // ---- mobile nav toggle ----
 const navToggle = document.getElementById('navToggle');
 const navMobile = document.getElementById('navLinksMobile');
